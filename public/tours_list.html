@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tours | SlipLess</title>
+
+    <!-- PWA: manifest and icons (files not created yet) -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <meta name="theme-color" content="#0f172a"> <!-- placeholder colour, replace with the brand colour from the design -->
+
+    <!-- Shared stylesheet (file not created yet) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="app-page">
+
+        <!-- Page title and the way into settings.
+             The Tours screen is not designed yet, so layout is a placeholder. -->
+        <header class="page-header">
+            <h1>Tours</h1>
+            <a href="settings.html" class="settings-link">Settings</a>
+        </header>
+
+        <!-- Goes to the new tour page (page not created yet) -->
+        <a href="tours_new.html" id="new-tour-link" class="button-primary">New tour</a>
+
+        <!-- Shown while the tours load -->
+        <p id="tours-loading">Loading your tours...</p>
+
+        <!-- Shown if loading fails -->
+        <p id="tours-error" class="form-message form-message-error" role="alert" hidden>
+            Couldn't load your tours. Refresh the page and try again.
+        </p>
+
+        <!-- Empty state: shown when the guide has no tours yet -->
+        <section id="tours-empty" hidden>
+            <h2>No tours yet</h2>
+            <p>Create your first tour to start logging expenses.</p>
+        </section>
+
+        <!-- The tours: tours_list.js adds one item per tour -->
+        <ul id="tours-list" class="tours-list"></ul>
+    </main>
+
+    <!-- Scripts: always last, in this order. They are plain files, so each one can only use what the ones above it defined. -->
+
+    <!-- 1. Supabase library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- 2. Generated config provides the browser's Supabase URL and public anon key; load it before the client. -->
+    <script src="supabase-config.js"></script>
+
+    <!-- 3. Creates the shared Supabase connection from the config above. -->
+    <script src="supabase-client.js"></script>
+
+    <!-- 4. Session check helpers. On this page: if signed out, go to login.html -->
+    <script src="auth-guard.js"></script>
+
+    <!-- 5. This page's own logic: load and show the tours -->
+    <script src="tours_list.js"></script>
+</body>
+</html>

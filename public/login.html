@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in | SlipLess</title>
+
+    <!-- PWA: manifest and icons (files not created yet) -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <meta name="theme-color" content="#0f172a"> <!-- placeholder colour, replace with the brand colour from the design -->
+
+    <!-- Shared stylesheet (file not created yet) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="auth-page">
+
+        <!-- Logo and name (logo file not created yet) -->
+        <header class="auth-header">
+            <img src="icons/logo.png" alt="SlipLess logo" class="auth-logo">
+            <h1>SlipLess</h1>
+        </header>
+
+        <!-- Tagline. The design replaces it with the error banner when login fails. -->
+        <p id="login-tagline" class="auth-tagline">Log expenses. Export one PDF.</p>
+
+        <!-- Error banner: hidden until login.js shows it after a failed login -->
+        <div id="login-error" class="error-banner" role="alert" hidden>
+            <strong>Can't log in</strong>
+            <p>Email or password is wrong. Check both and try again.</p>
+        </div>
+
+        <!-- Using a form means pressing Enter also submits it. login.js listens for the submit. -->
+        <form id="login-form" novalidate>
+
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" name="email" placeholder="guide@example.com"
+                   autocomplete="email" required>
+
+            <!-- No forgot-password screen is designed yet, so this goes nowhere for now -->
+            <a href="#" id="forgot-password-link" class="forgot-link">Forgot password?</a>
+
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" name="password"
+                   autocomplete="current-password" required>
+
+            <button type="submit" id="login-button" class="button-primary">Log in</button>
+            <button type="button" id="google-login-button" class="button-secondary">Continue with Google</button>
+        </form>
+
+        <p class="auth-switch">
+            <a href="signup.html">New here? Create an account</a>
+        </p>
+    </main>
+
+    <!-- Scripts: always last, in this order. They are plain files, so each one can only use what the ones above it defined. -->
+
+    <!-- 1. Supabase library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- 2. Generated config provides the browser's Supabase URL and public anon key; load it before the client. -->
+    <script src="supabase-config.js"></script>
+
+    <!-- 3. Creates the shared Supabase connection from the config above. -->
+    <script src="supabase-client.js"></script>
+
+    <!-- 4. Session check helpers. On this page: if already signed in, go to tours_list.html -->
+    <script src="auth-guard.js"></script>
+
+    <!-- 5. This page's own logic: form submit, Google button, showing the error banner -->
+    <script src="login.js"></script>
+</body>
+</html>

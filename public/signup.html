@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create account | SlipLess</title>
+
+    <!-- PWA: manifest and icons (files not created yet) -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <meta name="theme-color" content="#0f172a"> <!-- placeholder colour, replace with the brand colour from the design -->
+
+    <!-- Shared stylesheet (file not created yet) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="auth-page">
+
+        <!-- Back arrow and page title -->
+        <header class="auth-header auth-header-back">
+            <a href="login.html" class="back-link" aria-label="Back to log in">&larr;</a>
+            <h1>Create account</h1>
+        </header>
+
+        <!-- Message banner: hidden until signup.js shows an error or a notice.
+             No signup error state is designed yet, so this reuses the login banner style. -->
+        <div id="signup-error" class="error-banner" role="alert" hidden>
+            <strong id="signup-error-title">Can't create account</strong>
+            <p id="signup-error-message"></p>
+        </div>
+
+        <!-- Using a form means pressing Enter also submits it. signup.js listens for the submit. -->
+        <form id="signup-form" novalidate>
+
+            <label for="signup-name">Full name <span class="field-required">Required</span></label>
+            <input type="text" id="signup-name" name="full_name" autocomplete="name" required>
+
+            <label for="signup-email">Email <span class="field-required">Required</span></label>
+            <input type="email" id="signup-email" name="email" placeholder="guide@example.com"
+                   autocomplete="email" required>
+
+            <label for="signup-password">Password <span class="field-required">Required</span></label>
+            <input type="password" id="signup-password" name="password"
+                   autocomplete="new-password" required>
+            <p class="field-hint">Use at least 8 characters</p>
+
+            <button type="submit" id="signup-button" class="button-primary">Create account</button>
+            <button type="button" id="google-signup-button" class="button-secondary">Sign up with Google</button>
+        </form>
+    </main>
+
+    <!-- Scripts: always last, in this order. They are plain files, so each one can only use what the ones above it defined. -->
+
+    <!-- 1. Supabase library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- 2. Generated config provides the browser's Supabase URL and public anon key; load it before the client. -->
+    <script src="supabase-config.js"></script>
+
+    <!-- 3. Creates the shared Supabase connection from the config above. -->
+    <script src="supabase-client.js"></script>
+
+    <!-- 4. Session check helpers. On this page: if already signed in, go to tours_list.html -->
+    <script src="auth-guard.js"></script>
+
+    <!-- 5. This page's own logic: form submit, Google button, showing messages -->
+    <script src="signup.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlipLess</title>
+
+    <!-- PWA: manifest and icons (files not created yet) -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <meta name="theme-color" content="#0f172a"> <!-- placeholder colour, replace with the brand colour from the design -->
+
+    <!-- Shared stylesheet (file not created yet) -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- If JavaScript is off, this still sends the user to login -->
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=login.html">
+    </noscript>
+</head>
+<body>
+    <!-- index.html has no screen. It only decides where to send the user,
+         so this is what shows for the split second before the redirect. -->
+    <p>Loading...</p>
+
+    <!-- Scripts: always last, in this order. They are plain files, so each one can only use what the ones above it defined. -->
+
+    <!-- 1. Supabase library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- 2. Generated config provides the browser's Supabase URL and public anon key; load it before the client. -->
+    <script src="supabase-config.js"></script>
+
+    <!-- 3. Creates the shared Supabase connection from the config above. -->
+    <script src="supabase-client.js"></script>
+
+    <!-- 4. Session check helpers -->
+    <script src="auth-guard.js"></script>
+
+    <!-- 5. This page's own logic: signed in goes to tours_list.html, signed out goes to login.html -->
+    <script src="index.js"></script>
+
+    <!-- 5. Service worker registration, uncomment once service-worker.js exists -->
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("service-worker.js");
+        }
+    </script>
+    
+</body>
+</html>

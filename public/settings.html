@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | SlipLess</title>
+
+    <!-- PWA: manifest and icons (files not created yet) -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <meta name="theme-color" content="#0f172a"> <!-- placeholder colour, replace with the brand colour from the design -->
+
+    <!-- Shared stylesheet (file not created yet) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="app-page">
+
+        <!-- Back link and page title -->
+        <header class="page-header">
+            <a href="tours_list.html" class="back-link" aria-label="Back to tours">&larr;</a>
+            <h1>Settings</h1>
+        </header>
+
+        <!-- Shown while the profile loads, replaced by the form -->
+        <p id="settings-loading">Loading your profile...</p>
+
+        <!-- Result of loading or saving. settings.js fills it and shows it. -->
+        <p id="settings-message" class="form-message" role="status" hidden></p>
+
+        <!-- Profile form: hidden until the profile has loaded.
+             Fields match the profiles table. The settings screen is not designed yet, so layout is a placeholder. -->
+        <form id="settings-form" novalidate hidden>
+
+            <h2>Profile</h2>
+
+            <label for="settings-name">Full name <span class="field-required">Required</span></label>
+            <input type="text" id="settings-name" name="full_name" autocomplete="name" required>
+
+            <label for="settings-business">Business name</label>
+            <input type="text" id="settings-business" name="business_name" autocomplete="organization">
+
+            <label for="settings-phone">Phone</label>
+            <input type="tel" id="settings-phone" name="phone" autocomplete="tel">
+
+            <!-- Read only: comes from the account and can't be changed here -->
+            <label for="settings-email">Email</label>
+            <input type="email" id="settings-email" name="email" disabled>
+
+            <h2>Banking details</h2>
+
+            <label for="settings-banking">Your payment details</label>
+            <textarea id="settings-banking" name="banking_details" rows="5"></textarea>
+            <p class="field-hint">These appear on your exported PDF report, so you don't re-enter them for each tour.</p>
+
+            <button type="submit" id="save-button" class="button-primary">Save changes</button>
+        </form>
+
+        <!-- Outside the form so it is always available, even if the profile fails to load -->
+        <section class="account-section">
+            <h2>Account</h2>
+            <button type="button" id="signout-button" class="button-secondary">Sign out</button>
+        </section>
+    </main>
+
+    <!-- Scripts: always last, in this order. They are plain files, so each one can only use what the ones above it defined. -->
+
+    <!-- 1. Supabase library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- 2. Generated config provides the browser's Supabase URL and public anon key; load it before the client. -->
+    <script src="supabase-config.js"></script>
+
+    <!-- 3. Creates the shared Supabase connection from the config above. -->
+    <script src="supabase-client.js"></script>
+
+    <!-- 4. Session check helpers. On this page: if signed out, go to login.html -->
+    <script src="auth-guard.js"></script>
+
+    <!-- 5. This page's own logic: load and save the profile, sign out -->
+    <script src="settings.js"></script>
+</body>
+</html>
